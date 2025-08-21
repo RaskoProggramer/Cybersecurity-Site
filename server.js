@@ -35,20 +35,23 @@ app.use(express.static("public"));
 
 // Serve index.html
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "Threat.html"));
+  res.sendFile(path.join(__dirname, "public", "home.html"));
 });
 app.get("/about", (_req, res) => {
-  res.sendFile(path.join(__dirname, "public", "AboutUs.html"));
+  res.sendFile(path.join(__dirname, "public", "About us.html"));
 });
 app.get("/incidents", (_req, res) => {
-  res.sendFile(path.join(__dirname, "public", "incident.html"));
+  res.sendFile(path.join(__dirname, "public", "resources.html"));
 });
 app.get("/training", (_req, res) => {
   res.sendFile(path.join(__dirname, "public", "training.html"));
 });
-// app.get("/", (_req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "incident.html"));
-// });
+app.get("/news", (_req, res) => {
+  res.sendFile(path.join(__dirname, "public", "news.html"));
+});
+app.get("/threat", (_req, res) => {
+  res.sendFile(path.join(__dirname, "public", "Threat.html"));
+});
 
 // Threat Alerts (CVE API)
 app.get("/api/threats", async (req, res) => {
