@@ -2,26 +2,17 @@ fetch("/api/threats")
     .then(response => response.json())
     .then(data => {
        const threatTable = document.getElementById('threat-feed');
-        threatTable.innerHTML = `
+       threatTable.innerHTML = `
+        <thead>
             <tr>
                 <th>CVE ID</th>
                 <th>Description</th>
                 <th>Source</th>
                 <th>Date Published</th>
             </tr>
-        `;
-        threatTable.innerHTML = `
-            <thead>
-                <tr>
-                    <th>CVE ID</th>
-                    <th>Description</th>
-                    <th>Source</th>
-                    <th>Date Published</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        `;
-
+        </thead>
+        <tbody></tbody>
+    `;
         const tbody = threatTable.querySelector("tbody");
 
         data.forEach(threat => {
@@ -43,13 +34,25 @@ fetch("/api/threats")
     });
 
 fetch("/api/bulletins")
-        .then(response => response.json())
-        .then(data => {
-            const bulletinList = document.getElementById('bulletins');
-            bulletinList.innerHTML = '<h3>Week of: ' + data.weekOf + '</h3><ul>' +
-                data.headlines.map(article => 
-                    `<li><a href="${article.url}" target="_blank">${article.title}</a> - <em> ${article.source}<em> (Published: ${new Date(article.publishedAt).toLocaleDateString()})</li>.`).join('') + '</ul>';
-        })
-        .catch(error => {
-            console.error('Error fetching bulletins:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        const bulletinList = document.getElementById('bulletins');
+        bulletinList.innerHTML = `
+            <h3>Week of: ${data.weekOf}</h3>
+            <ul>
+                ${data.headlines.map(article => `
+                    <li>
+                        <a href="${article.url}" target="_blank" class="bulletin-link">
+                            ${article.title}
+                        </a> 
+                        <span class="bulletin-meta">
+                            - ${article.source} (Published: ${new Date(article.publishedAt).toLocaleDateString()})
+                        </span>
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+    })
+    .catch(error => {
+        console.error('Error fetching bulletins:', error);
+    });

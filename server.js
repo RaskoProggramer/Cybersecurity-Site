@@ -35,10 +35,10 @@ app.use(express.static("public"));
 
 // Serve index.html
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "home.html"));
+  res.sendFile(path.join(__dirname, "public", "./home.html"));
 });
 app.get("/about", (_req, res) => {
-  res.sendFile(path.join(__dirname, "public", "About us.html"));
+  res.sendFile(path.join(__dirname, "public", "./AboutUs.html"));
 });
 app.get("/incidents", (_req, res) => {
   res.sendFile(path.join(__dirname, "public", "resources.html"));

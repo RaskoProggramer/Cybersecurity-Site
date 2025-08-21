@@ -444,3 +444,173 @@ footer .social-icons a:hover {
   from { opacity: 0; transform: translateY(-30px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ===== Threat Feed Table ===== */
+/* ===== Threat Feed Table ===== */
+#threat-feed {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background-color: #111;
+  border: 2px solid var(--neon-blue);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+#threat-feed th,
+#threat-feed td {
+  border: 1px solid var(--neon-blue);
+  padding: 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+#threat-feed th {
+  background-color: var(--black);
+  color: var(--neon-blue);
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: left;
+}
+
+#threat-feed td {
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+#threat-feed tr:nth-child(even) {
+  background-color: #1a1a1a;
+}
+
+#threat-feed tr:hover {
+  background-color: rgba(0, 255, 255, 0.05);
+  transition: 0.3s ease;
+}
+
+/* Responsive stacking on small screens */
+@media (max-width: 768px) {
+  #threat-feed, 
+  #threat-feed thead, 
+  #threat-feed tbody, 
+  #threat-feed th, 
+  #threat-feed td, 
+  #threat-feed tr {
+    display: block;
+    width: 100%;
+  }
+
+  #threat-feed thead {
+    display: none;
+  }
+
+  #threat-feed tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--neon-blue);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+  }
+
+  #threat-feed td {
+    border: none;
+    padding: 0.5rem 0;
+  }
+
+  #threat-feed td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: var(--neon-blue);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+}
+
+/* Apply to all cells */
+#threat-feed {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#threat-feed th,
+#threat-feed td {
+  border: 1px solid #00e5ff;
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Column 1: CVE ID */
+#threat-feed th:nth-child(1),
+#threat-feed td:nth-child(1) {
+  width: 15%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Column 2: Description */
+#threat-feed th:nth-child(2),
+#threat-feed td:nth-child(2) {
+  width: 45%;
+  text-align: left;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+/* Column 3: Source */
+#threat-feed th:nth-child(3),
+#threat-feed td:nth-child(3) {
+  width: 20%;
+  text-align: center;
+}
+
+/* Column 4: Date */
+#threat-feed th:nth-child(4),
+#threat-feed td:nth-child(4) {
+  width: 20%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ===== Bulletin Styles ===== */
+#bulletins {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: #111;
+  border: 2px solid var(--neon-blue);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+}
+
+#bulletins h3 {
+  color: var(--neon-blue);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px var(--neon-blue);
+}
+
+#bulletins ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#bulletins li {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.bulletin-link {
+  color: #00ff88; /* professional green */
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.bulletin-link:hover {
+  color: #00ffaa;
+  text-shadow: 0 0 6px rgba(0, 255, 136, 0.7);
+}
+
+.bulletin-meta {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-left: 0.5rem;
+}

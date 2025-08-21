@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>News & Events - Cybersecurity Awareness & Incident Response Portal</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script1.js"></script>
+  <script src="incident.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet">
@@ -25,11 +27,12 @@
     </label>
     <nav class="main-nav">
       <ul>
-        <li><a href="#hero-section">Home</a></li>
-        <li><a href="#">Training Programme</a></li>
-        <li><a href="#">News & Events</a></li>
-        <li><a href="#">Threat Intelligence</a></li>
-        <li><a href="#">About Us</a></li>
+         <li><a href="./home.html">Home</a></li>
+        <li><a href="./training.html">Training Programme</a></li>
+        <li><a href="./news.html">News & Events</a></li>
+        <li><a href="./Threat.html">Threat Intelligence</a></li>
+        <li><a href="./AboutUs.html">About Us</a></li>
+        <li><a href="./resources.html">Policies & Resources</a></li>
       </ul>
     </nav>
     <button class="report-incident">Report an Incident</button>
@@ -86,6 +89,55 @@
       </div>
     </section>
   </main>
+  <div class="incident-modal" id="incidentModal">
+  <div class="incident-modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <h2>🚨 Report an Incident</h2>
+    <p>Please provide details so we can take action quickly.</p>
+     <form id="incident-form">
+      <label>Title *</label>
+      <input type="text" name="title" required placeholder="Phishing email to Finance inbox" />
+
+      <div class="row">
+        <div>
+          <label>Reporter Email *</label>
+          <input type="email" name="reporterEmail" required placeholder="you@company.com" />
+        </div>
+        <div>
+          <label>Severity</label>
+          <select name="severity">
+            <option>low</option><option selected>medium</option><option>high</option><option>critical</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Category</label>
+          <select name="category">
+            <option>phishing</option><option>malware</option><option>data_leak</option><option>other</option>
+          </select>
+        </div>
+        <div>
+          <label>Affected Asset</label>
+          <input type="text" name="affectedAsset" placeholder="host01, user@company.com, system X" />
+        </div>
+      </div>
+
+      <label>Description *</label>
+      <textarea name="description" required placeholder="What happened? Include times, users, systems, URLs..."></textarea>
+
+      <label>Evidence (max 5 files, 25MB each)</label>
+      <input type="file" name="evidence" id="evidence" multiple />
+
+      <div class="actions">
+        <button type="submit" class="primary">Submit Incident</button>
+        <button type="reset" class="muted">Reset</button>
+      </div>
+
+      <div id="success" class="success"></div>
+      <div id="error" class="error"></div>
+    </form>
 
   <footer>
     <p>&copy; 2025 Cybersecurity Awareness & Incident Response Portal</p>
