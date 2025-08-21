@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Report an Incident</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .card { max-width: 720px; margin: 30px auto; padding: 18px; border: 1px solid #ddd; border-radius: 12px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { font-weight: 600; display: block; margin: 10px 0 6px; }
+    input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    textarea { min-height: 120px; }
+    .actions { display: flex; gap: 10px; margin-top: 14px; }
+    button { padding: 10px 16px; border: 0; border-radius: 8px; cursor: pointer; }
+    .primary { background: #1a1a2e; color: #fff; }
+    .muted { background: #eee; }
+    .note { font-size: 12px; color: #666; margin-top: 6px; }
+    .success { background: #e9f7ef; color: #1e7e34; padding: 10px; border-radius: 8px; margin-top: 12px; display:none; }
+    .error { background: #fdecea; color: #b71c1c; padding: 10px; border-radius: 8px; margin-top: 12px; display:none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Quick Incident Report</h2>
+    <p class="note">Submit suspicious emails/files or security events. Fields marked * are required.</p>
+    <form id="incident-form">
+      <label>Title *</label>
+      <input type="text" name="title" required placeholder="Phishing email to Finance inbox" />
+
+      <div class="row">
+        <div>
+          <label>Reporter Email *</label>
+          <input type="email" name="reporterEmail" required placeholder="you@company.com" />
+        </div>
+        <div>
+          <label>Severity</label>
+          <select name="severity">
+            <option>low</option><option selected>medium</option><option>high</option><option>critical</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Category</label>
+          <select name="category">
+            <option>phishing</option><option>malware</option><option>data_leak</option><option>other</option>
+          </select>
+        </div>
+        <div>
+          <label>Affected Asset</label>
+          <input type="text" name="affectedAsset" placeholder="host01, user@company.com, system X" />
+        </div>
+      </div>
+
+      <label>Description *</label>
+      <textarea name="description" required placeholder="What happened? Include times, users, systems, URLs..."></textarea>
+
+      <label>Evidence (max 5 files, 25MB each)</label>
+      <input type="file" name="evidence" id="evidence" multiple />
+
+      <div class="actions">
+        <button type="submit" class="primary">Submit Incident</button>
+        <button type="reset" class="muted">Reset</button>
+      </div>
+
+      <div id="success" class="success"></div>
+      <div id="error" class="error"></div>
+    </form>
+  </div>
+
+  <script src="incident.js"></script>
+</body>
+</html>
