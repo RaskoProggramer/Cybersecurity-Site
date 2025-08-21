@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News & Events - Cybersecurity Awareness & Incident Response Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+  <script data-cfasync="false" src="https://public.tockify.com/browser/embed.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Cybersecurity Awareness & Incident Response Portal</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="news.html">News & Events</a></li>
+            <li><a href="resources.html">Policies & Resources</a></li>
+        </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2> News & Events</h2>
+      <ul class="bullets">
+        <li><strong>Upcoming cybersecurity training sessions</strong></li>
+        <li><strong>Archive of past events</strong></li>
+        <li><strong>Cybersecurity awareness month campaigns</strong></li>
+      </ul>
+
+      <div id="calendar" class="calendar"></div>
+
+      <h3>Archive of Past Events</h3>
+      <div id="archive" class="archive"></div>
+
+      <div class="tockify-wrap">
+        <h4>Community Calendar (Tockify)</h4>
+        <div data-tockify-component="calendar" data-tockify-calendar="yourcalendarid"></div>
+      </div>
+
+      <div class="campaigns">
+        <h3>Cybersecurity Awareness Month Campaigns</h3>
+        <div class="grid">
+          <div class="campaign">
+            <h4>Week 1: Passwords & MFA</h4>
+            <p>Launch an MFA enablement drive and a password manager intro.</p>
+            <ul>
+              <li>Email templates</li>
+              <li>Poster pack</li>
+              <li>5‑minute slide deck</li>
+            </ul>
+          </div>
+          <div class="campaign">
+            <h4>Week 2: Phishing Defense</h4>
+            <p>Run a short micro‑training and a simulated phishing exercise.</p>
+            <ul>
+              <li><a href="assets/Phishing_Best_Practices.pdf" download>1‑pager guide (PDF)</a></li>
+              <li><a href="assets/Security_Cheat_Sheet.png" download>Cheat sheet (PNG)</a></li>
+            </ul>
+          </div>
+          <div class="campaign">
+            <h4>Week 3: Device & Patch Hygiene</h4>
+            <p>Push auto‑updates, disk encryption, and secure configuration tips.</p>
+          </div>
+          <div class="campaign">
+            <h4>Week 4: Data Handling & Incident Reporting</h4>
+            <p>Reinforce data classification and how to report incidents quickly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cybersecurity Awareness & Incident Response Portal</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
