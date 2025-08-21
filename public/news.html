@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>News & Events - Cybersecurity Awareness & Incident Response Portal</title>
-  <link rel="stylesheet" href="styles.css" />
-
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
@@ -13,13 +14,23 @@
 </head>
 <body>
   <header>
-    <h1>Cybersecurity Awareness & Incident Response Portal</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="news.html">News & Events</a></li>
-            <li><a href="resources.html">Policies & Resources</a></li>
-        </ul>
+    <div class="logo">
+      <img src="asset/SP.png" alt="CyberSP Logo">
+    </div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-icon" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </label>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./training.html">Training Programme</a></li>
+        <li><a href="./news.html">News & Events</a></li>
+        <li><a href="./Threat.html">Threat Intelligence</a></li>
+        <li><a href="./About us.html">About Us</a></li>
+      </ul>
     </nav>
   </header>
 

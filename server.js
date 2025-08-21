@@ -37,6 +37,15 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "Threat.html"));
 });
+app.get("/about", (_req, res) => {
+  res.sendFile(path.join(__dirname, "public", "AboutUs.html"));
+});
+app.get("/incidents", (_req, res) => {
+  res.sendFile(path.join(__dirname, "public", "incident.html"));
+});
+app.get("/training", (_req, res) => {
+  res.sendFile(path.join(__dirname, "public", "training.html"));
+});
 // app.get("/", (_req, res) => {
 //   res.sendFile(path.join(__dirname, "public", "incident.html"));
 // });
