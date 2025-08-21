@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberSP</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="asset/SP.png" alt="CyberSP Logo">
+    </div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-icon" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </label>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#hero-section">Home</a></li>
+        <li><a href="#">Training Programme</a></li>
+        <li><a href="#">News & Events</a></li>
+        <li><a href="#">Threat Intelligence</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+    </nav>
+    <button class="report-incident">Report an Incident</button>
+  </header>
+
+  <section class="hero" id="hero-section">
+    <video autoplay muted loop playsinline preload="auto" class="hero-video" >
+      <source src="asset/Mother.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <div class="hero-content">
+      <h1>Stay Safe. Stay Secure.</h1>
+      <div class="cta-group">
+        <a href="#" class="primary-cta">Start Cybersecurity Training</a>
+        <a href="#" class="secondary-cta">Learn How to Spot Threats</a>
+      </div>
+    </div>
+    <div class="scroll-down" aria-hidden="true">
+      <i class="fas fa-angle-down"></i>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-column">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#">Policies</a></li>
+        <li><a href="#">Training</a></li>
+        <li><a href="#">Incident Reporting</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3>Newsletter</h3>
+      <p>Sign up for security updates:</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Your email address" aria-label="Email address">
+        <button>Sign Up</button>
+      </div>
+    </div>
+    <div class="footer-column">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+
+  <!-- Incident Report Modal -->
+<div class="incident-modal" id="incidentModal">
+  <div class="incident-modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <h2>🚨 Report an Incident</h2>
+    <p>Please provide details so we can take action quickly.</p>
+    <form id="incidentForm">
+      <label for="incident-type">Type of Incident</label>
+      <select id="incident-type" required>
+        <option value="">-- Select --</option>
+        <option value="phishing">Phishing Attempt</option>
+        <option value="malware">Malware / Virus</option>
+        <option value="unauthorized">Unauthorized Access</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="incident-details">Incident Details</label>
+      <textarea id="incident-details" rows="4" placeholder="Describe what happened..." required></textarea>
+
+      <label for="incident-email">Your Email (optional)</label>
+      <input type="email" id="incident-email" placeholder="you@example.com">
+
+      <button type="submit" class="submit-btn">Submit Report</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
