@@ -1,48 +1,30 @@
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('CyberSP website loaded successfully!');
+// Get references to the form and the message box
+const contactForm = document.getElementById('contact-form');
+const messageBox = document.getElementById('message-box');
 
-  // Smooth scrolling for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href');
-      if (targetId && targetId !== '#') {
-        const targetSection = document.querySelector(targetId);
-        if (targetSection) {
-          targetSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    });
-  });
+/**
+ * Shows a temporary message box with a specified message and color.
+ * @param {string} message The message to display.
+ * @param {string} color The Tailwind CSS color class (e.g., 'green').
+ */
+function showMessage(message, color) {
+    messageBox.textContent = message;
+    messageBox.style.display = 'block';
+    messageBox.className = `bg-${color}-600 text-white p-4 rounded-lg shadow-lg transition-opacity duration-300`;
+    setTimeout(() => {
+        messageBox.style.display = 'none';
+    }, 5000); // Hide after 5 seconds
+}
 
-  // Incident Modal Logic
-  const modal = document.getElementById('incidentModal');
-  const openBtn = document.querySelector('.report-incident');
-  const closeBtn = document.getElementById('closeModal');
-  const form = document.getElementById('incidentForm');
+// Add a listener for the form submission
+contactForm.addEventListener('submit', function(event) {
+    // Prevent the default form submission to avoid page refresh
+    event.preventDefault();
 
-  // Open modal
-  openBtn.addEventListener('click', () => {
-    modal.style.display = 'flex';
-  });
+    // Simulate a successful form submission
+    console.log('Form Submitted!');
+    showMessage('Your query has been submitted successfully!', 'green');
 
-  // Close modal
-  closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-
-  // Close on outside click
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-
-  // Handle form submission
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('✅ Incident report submitted successfully!');
-    form.reset();
-    modal.style.display = 'none';
-  });
+    // Optionally, clear the form fields
+    contactForm.reset();
 });
