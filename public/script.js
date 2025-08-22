@@ -22,7 +22,7 @@ contactForm.addEventListener('submit', function(event) {
     event.preventDefault();
 
     // Simulate a successful form submission
-    console.log('Form Submitted!');
+    alert('Form Submitted!');
     showMessage('Your query has been submitted successfully!', 'green');
 
     // Optionally, clear the form fields
