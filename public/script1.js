@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchBulletData() {
   const bullets = document.getElementById("news-bullets");
-  bullets.innerHTML = ""; // Clear old
 
   const endpoints = {
     training: "https://api.rss2json.com/v1/api.json?rss_url=https://www.sans.org/feeds/news",  // Replace with SANS RSS

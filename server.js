@@ -6,9 +6,10 @@ const admin = require("firebase-admin");
 const multer = require("multer");
 const { Storage } = require("@google-cloud/storage");
 const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
 
 
-require("dotenv").config();
+dotenv.config();
 const upload = multer({ storage: multer.memoryStorage() });
 const serviceAccount = require("./cybersite.json");
 
@@ -30,8 +31,9 @@ db.settings({
   ssl: true 
 });
 
-// Serve static files
 app.use(express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Serve index.html
 app.get("/", (req, res) => {
@@ -217,6 +219,44 @@ app.get("/api/incidents/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch tickets" });
   }
 });
+
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message } = req.body;  // now req.body won’t be undefined
+
+    if (!message) {
+      return res.status(400).json({ error: 'Message is required' });
+    }
+
+    // Example: send to OpenAI
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "HTTP-Referer": "http://localhost:3000",  // ✅ replace with your site URL
+        "X-Title": "CyberSP Bot"                 // shows on OpenRouter dashboard
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-4o-mini",   // ✅ choose model (cheap & fast)
+        messages: [{ role: "user", content: message }]
+      })
+    });
+
+   const data = await response.json();
+
+    if (data.error) {
+      return res.status(500).json({ error: data.error });
+    }
+
+    const reply = data.choices?.[0]?.message?.content || "Sorry, I didn’t get that.";
+    res.json({ reply });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
