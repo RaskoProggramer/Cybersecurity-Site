@@ -49,13 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.style.display = 'none';
   });
 
-  async function fetchBulletData() {
+async function fetchBulletData() {
   const bullets = document.getElementById("news-bullets");
+  bullets.innerHTML = ""; // clear "Loading..." placeholder
 
   const endpoints = {
-    training: "https://api.rss2json.com/v1/api.json?rss_url=https://www.sans.org/feeds/news",  // Replace with SANS RSS
-    archive: "https://api.rss2json.com/v1/api.json?rss_url=https://www.cisa.gov/news-events/rss", // CISA News
-    awareness: "https://api.rss2json.com/v1/api.json?rss_url=https://www.cisa.gov/resources-tools/resources/secure-our-world-cybersecurity-awareness-month-resources" // If RSS available
+    training: "https://api.rss2json.com/v1/api.json?rss_url=https://www.sans.org/feeds/news",
+    archive: "https://api.rss2json.com/v1/api.json?rss_url=https://www.cisa.gov/news-events/rss",
+    awareness: "https://api.rss2json.com/v1/api.json?rss_url=https://www.cisa.gov/news-events/cybersecurity-advisories/alerts/alerts-rss-feed.xml"
   };
 
   try {
@@ -64,18 +65,26 @@ document.addEventListener('DOMContentLoaded', () => {
       fetch(endpoints.archive),
       fetch(endpoints.awareness)
     ]);
-    const trainJson = await trainRes.json();
-    const archJson = await archRes.json();
-    const awareJson = await awareRes.json();
 
-    const upcoming = trainJson.items?.[0]?.title || "SANS: No upcoming events found";
-    bullets.innerHTML += `<li><strong>Upcoming cybersecurity training sessions</strong> – ${upcoming}</li>`;
+    const [trainJson, archJson, awareJson] = await Promise.all([
+      trainRes.json(),
+      archRes.json(),
+      awareRes.json()
+    ]);
 
-    const past = archJson.items?.[0]?.title || "CISA: No recent events";
-    bullets.innerHTML += `<li><strong>Archive of past events</strong> – ${past}</li>`;
-
+    const upcoming = trainJson.items?.[0]?.title || "No upcoming SANS events found";
+    const past = archJson.items?.[0]?.title || "No recent CISA events found";
     const campaign = awareJson.items?.[0]?.title || "Secure Our World campaign resources available";
-    bullets.innerHTML += `<li><strong>Cybersecurity awareness month campaigns</strong> – ${campaign}</li>`;
+
+    function addBullet(label, text) {
+      const li = document.createElement("li");
+      li.innerHTML = `<strong>${label}</strong> – ${text}`;
+      bullets.appendChild(li);
+    }
+
+    addBullet("Upcoming cybersecurity training sessions", upcoming);
+    addBullet("Archive of past events", past);
+    addBullet("Cybersecurity awareness month campaigns", campaign);
   } catch (err) {
     console.error(err);
     bullets.innerHTML = "<li>⚠️ Unable to load real-time updates at the moment.</li>";

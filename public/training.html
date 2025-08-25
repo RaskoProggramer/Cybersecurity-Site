@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="script1.js"></script>
     <script src="chatbot.js"></script>
-    <script src="incident.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -16,104 +15,8 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-    <style>
-        /* Theme Variables */
-        :root {
-            --bg-primary: #000000;
-            --bg-secondary: #1a1a1a;
-            --bg-tertiary: rgba(26, 26, 26, 0.8);
-            --text-primary: #ffffff;
-            --text-secondary: #d1d5db;
-            --text-muted: #9ca3af;
-            --accent-color: #00ffff;
-            --accent-secondary: #0080ff;
-            --border-color: rgba(0, 255, 255, 0.3);
-            --border-muted: rgba(255, 255, 255, 0.1);
-            --card-bg: rgba(26, 26, 26, 0.8);
-            --gradient-bg: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-            --success-color: #10b981;
-            --warning-color: #f97316;
-            --error-color: #ef4444;
-        }
-
-        [data-theme="light"] {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-tertiary: rgba(248, 250, 252, 0.9);
-            --text-primary: #1f2937;
-            --text-secondary: #374151;
-            --text-muted: #6b7280;
-            --accent-color: #0891b2;
-            --accent-secondary: #0369a1;
-            --border-color: rgba(8, 145, 178, 0.3);
-            --border-muted: rgba(0, 0, 0, 0.1);
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --gradient-bg: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
-            --success-color: #059669;
-            --warning-color: #d97706;
-            --error-color: #dc2626;
-        }
-
-        /* Theme Toggle Button Styles */
-        .theme-toggle {
-            position: fixed;
-            top: 600px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            padding: 8px 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: var(--text-primary);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .theme-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-            border-color: var(--accent-color);
-        }
-
-        .theme-toggle-icon {
-            font-size: 16px;
-            transition: transform 0.3s ease;
-        }
-
-        .theme-toggle:hover .theme-toggle-icon {
-            transform: rotate(180deg);
-        }
-
-        /* Update body background to use CSS variable */
-        body {
-            background: var(--gradient-bg) !important;
-            background-attachment: fixed !important;
-            color: var(--text-primary) !important;
-            transition: all 0.3s ease;
-        }
-
-        /* Global theme-aware styles */
-        .themed-bg-primary { background-color: var(--bg-primary) !important; }
-        .themed-bg-secondary { background-color: var(--bg-secondary) !important; }
-        .themed-text-primary { color: var(--text-primary) !important; }
-        .themed-text-secondary { color: var(--text-secondary) !important; }
-        .themed-text-muted { color: var(--text-muted) !important; }
-        .themed-border { border-color: var(--border-color) !important; }
-    </style>
 </head>
 <body>
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="themeToggle">
-        <span class="theme-toggle-icon" id="themeIcon">🌙</span>
-        <span id="themeText">Dark Mode</span>
-    </button>
-
     <header>
     <div class="logo">
       <img src="asset/SP.png" alt="CyberSP Logo">
@@ -166,62 +69,6 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        // Theme Toggle Functionality
-        class ThemeManager {
-            constructor() {
-                this.theme = localStorage.getItem('theme') || 'dark';
-                this.init();
-            }
-
-            init() {
-                this.applyTheme(this.theme);
-                this.bindEvents();
-            }
-
-            bindEvents() {
-                const toggle = document.getElementById('themeToggle');
-                if (toggle) {
-                    toggle.addEventListener('click', () => this.toggleTheme());
-                }
-            }
-
-            applyTheme(theme) {
-                const root = document.documentElement;
-                const icon = document.getElementById('themeIcon');
-                const text = document.getElementById('themeText');
-                
-                root.setAttribute('data-theme', theme);
-                
-                if (theme === 'light') {
-                    if (icon) icon.textContent = '☀️';
-                    if (text) text.textContent = 'Light Mode';
-                } else {
-                    if (icon) icon.textContent = '🌙';
-                    if (text) text.textContent = 'Dark Mode';
-                }
-                
-                this.theme = theme;
-                localStorage.setItem('theme', theme);
-                
-                // Trigger a custom event for React components to listen to
-                window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
-            }
-
-            toggleTheme() {
-                const newTheme = this.theme === 'dark' ? 'light' : 'dark';
-                this.applyTheme(newTheme);
-            }
-
-            getTheme() {
-                return this.theme;
-            }
-        }
-
-        // Initialize theme manager
-        window.themeManager = new ThemeManager();
-    </script>
 
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
@@ -344,43 +191,7 @@
             </svg>
         );
 
-        // Hook to listen for theme changes
-        const useTheme = () => {
-            const [theme, setTheme] = useState(window.themeManager?.getTheme() || 'dark');
-
-            useEffect(() => {
-                const handleThemeChange = (event) => {
-                    setTheme(event.detail.theme);
-                };
-
-                window.addEventListener('themeChanged', handleThemeChange);
-                return () => window.removeEventListener('themeChanged', handleThemeChange);
-            }, []);
-
-            return theme;
-        };
-
-        // Helper function to get theme-aware styles
-        const getThemedStyles = (theme) => {
-            const isDark = theme === 'dark';
-            
-            return {
-                background: isDark 
-                    ? 'linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%)'
-                    : 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%)',
-                textColor: isDark ? '#ffffff' : '#1f2937',
-                accentColor: isDark ? '#00ffff' : '#0891b2',
-                cardBg: isDark ? 'rgba(26, 26, 26, 0.8)' : 'rgba(255, 255, 255, 0.9)',
-                borderColor: isDark ? 'rgba(0, 255, 255, 0.3)' : 'rgba(8, 145, 178, 0.3)',
-                mutedText: isDark ? '#9ca3af' : '#6b7280',
-                secondaryBg: isDark ? '#1a1a1a' : '#f8fafc'
-            };
-        };
-
         const TrainingPortal = () => {
-            const theme = useTheme();
-            const themedStyles = getThemedStyles(theme);
-            
             const [activeModule, setActiveModule] = useState(null);
             const [selectedCourse, setSelectedCourse] = useState(null);
             const [difficultyFilter, setDifficultyFilter] = useState('all');
@@ -717,24 +528,11 @@
             };
 
             const getDifficultyColor = (difficulty) => {
-                const isDark = theme === 'dark';
                 switch (difficulty) {
-                    case 'Beginner': 
-                        return isDark 
-                            ? 'text-green-400 bg-green-400/20 border-green-400' 
-                            : 'text-green-600 bg-green-50 border-green-300';
-                    case 'Intermediate': 
-                        return isDark 
-                            ? 'text-orange-400 bg-orange-400/20 border-orange-400' 
-                            : 'text-orange-600 bg-orange-50 border-orange-300';
-                    case 'Advanced': 
-                        return isDark 
-                            ? 'text-red-400 bg-red-400/20 border-red-400' 
-                            : 'text-red-600 bg-red-50 border-red-300';
-                    default: 
-                        return isDark 
-                            ? 'text-gray-400 bg-gray-400/20 border-gray-400' 
-                            : 'text-gray-600 bg-gray-50 border-gray-300';
+                    case 'Beginner': return 'text-green-400 bg-green-400/20 border-green-400';
+                    case 'Intermediate': return 'text-orange-400 bg-orange-400/20 border-orange-400';
+                    case 'Advanced': return 'text-red-400 bg-red-400/20 border-red-400';
+                    default: return 'text-gray-400 bg-gray-400/20 border-gray-400';
                 }
             };
 
@@ -747,21 +545,18 @@
             };
 
             return React.createElement('div', { 
-                className: 'min-h-screen',
+                className: 'min-h-screen text-white',
                 style: { 
-                    background: themedStyles.background,
-                    backgroundAttachment: 'fixed',
-                    color: themedStyles.textColor,
-                    transition: 'all 0.3s ease'
+                    background: 'linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%)',
+                    backgroundAttachment: 'fixed'
                 }
             },
                 // Training Portal Header
                 React.createElement('div', { 
                     className: 'border-b',
                     style: { 
-                        background: themedStyles.cardBg,
-                        borderBottomColor: themedStyles.borderColor,
-                        backdropFilter: 'blur(10px)'
+                        background: 'linear-gradient(to right, #000000, #1a1a1a)',
+                        borderBottomColor: '#00ffff'
                     }
                 },
                     React.createElement('div', { className: 'max-w-7xl mx-auto px-6 py-4' },
@@ -769,54 +564,42 @@
                             React.createElement('div', { className: 'flex items-center space-x-3' },
                                 React.createElement(Shield, { 
                                     className: 'h-8 w-8',
-                                    style: { color: themedStyles.accentColor }
+                                    style: { color: '#00ffff' }
                                 }),
                                 React.createElement('div', null,
                                     React.createElement('h1', { 
                                         className: 'text-2xl font-bold',
                                         style: { 
-                                            background: `linear-gradient(to right, ${themedStyles.accentColor}, ${themedStyles.textColor})`,
+                                            background: 'linear-gradient(to right, #00ffff, #ffffff)',
                                             WebkitBackgroundClip: 'text',
                                             WebkitTextFillColor: 'transparent',
                                             backgroundClip: 'text'
                                         }
                                     }, 'CyberSec Training Hub'),
-                                    React.createElement('p', { 
-                                        className: 'text-sm',
-                                        style: { color: themedStyles.mutedText }
-                                    }, '12 Comprehensive Cybersecurity Courses')
+                                    React.createElement('p', { className: 'text-sm text-gray-300' }, '12 Comprehensive Cybersecurity Courses')
                                 )
                             ),
                             React.createElement('div', { className: 'flex items-center space-x-6' },
                                 React.createElement('div', { className: 'text-center' },
                                     React.createElement('div', { 
                                         className: 'text-2xl font-bold',
-                                        style: { color: themedStyles.accentColor }
+                                        style: { color: '#00ffff' }
                                     }, getTotalScore()),
-                                    React.createElement('div', { 
-                                        className: 'text-xs',
-                                        style: { color: themedStyles.mutedText }
-                                    }, 'Total Score')
+                                    React.createElement('div', { className: 'text-xs text-gray-400' }, 'Total Score')
                                 ),
                                 React.createElement('div', { className: 'text-center' },
                                     React.createElement('div', { 
                                         className: 'text-2xl font-bold',
-                                        style: { color: themedStyles.accentColor }
+                                        style: { color: '#00ffff' }
                                     }, getOverallProgress() + '%'),
-                                    React.createElement('div', { 
-                                        className: 'text-xs',
-                                        style: { color: themedStyles.mutedText }
-                                    }, 'Progress')
+                                    React.createElement('div', { className: 'text-xs text-gray-400' }, 'Progress')
                                 ),
                                 React.createElement('div', { className: 'text-center' },
                                     React.createElement('div', { 
                                         className: 'text-2xl font-bold',
-                                        style: { color: themedStyles.accentColor }
+                                        style: { color: '#00ffff' }
                                     }, filteredModules.length),
-                                    React.createElement('div', { 
-                                        className: 'text-xs',
-                                        style: { color: themedStyles.mutedText }
-                                    }, 'Courses')
+                                    React.createElement('div', { className: 'text-xs text-gray-400' }, 'Courses')
                                 )
                             )
                         )
@@ -827,9 +610,8 @@
                 React.createElement('div', { 
                     className: 'border-b',
                     style: { 
-                        background: themedStyles.cardBg,
-                        borderBottomColor: themedStyles.borderColor,
-                        backdropFilter: 'blur(10px)'
+                        background: 'rgba(26, 26, 26, 0.8)',
+                        borderBottomColor: 'rgba(0, 255, 255, 0.2)'
                     }
                 },
                     React.createElement('div', { className: 'max-w-7xl mx-auto px-6 py-6' },
@@ -842,18 +624,16 @@
                                         placeholder: 'Search courses...',
                                         value: searchTerm,
                                         onChange: (e) => setSearchTerm(e.target.value),
-                                        className: 'w-full pl-10 pr-4 py-3 rounded-lg border focus:outline-none focus:ring-2',
+                                        className: 'w-full pl-10 pr-4 py-3 rounded-lg border text-white placeholder-gray-400 focus:outline-none focus:ring-2',
                                         style: {
-                                            background: themedStyles.cardBg,
-                                            borderColor: themedStyles.borderColor,
-                                            color: themedStyles.textColor,
-                                            focusRingColor: themedStyles.accentColor
+                                            background: 'rgba(0, 0, 0, 0.5)',
+                                            borderColor: 'rgba(0, 255, 255, 0.3)',
+                                            focusRingColor: '#00ffff'
                                         }
                                     }),
                                     React.createElement('div', { className: 'absolute left-3 top-3.5' },
                                         React.createElement('svg', { 
-                                            className: 'h-5 w-5',
-                                            style: { color: themedStyles.mutedText },
+                                            className: 'h-5 w-5 text-gray-400',
                                             fill: 'none',
                                             stroke: 'currentColor',
                                             viewBox: '0 0 24 24'
@@ -873,7 +653,7 @@
                             React.createElement('div', { className: 'flex items-center space-x-3' },
                                 React.createElement(Filter, { 
                                     className: 'h-5 w-5',
-                                    style: { color: themedStyles.accentColor }
+                                    style: { color: '#00ffff' }
                                 }),
                                 React.createElement('div', { className: 'flex space-x-2' },
                                     ['all', 'Beginner', 'Intermediate', 'Advanced'].map(level =>
@@ -882,23 +662,21 @@
                                             onClick: () => setDifficultyFilter(level),
                                             className: `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border`,
                                             style: difficultyFilter === level ? {
-                                                background: themedStyles.accentColor,
-                                                color: theme === 'dark' ? '#000000' : '#ffffff',
-                                                borderColor: themedStyles.accentColor
+                                                background: '#00ffff',
+                                                color: '#000000',
+                                                borderColor: '#00ffff'
                                             } : {
-                                                background: themedStyles.cardBg,
-                                                color: themedStyles.textColor,
-                                                borderColor: themedStyles.borderColor
+                                                background: 'rgba(0, 0, 0, 0.3)',
+                                                color: '#ffffff',
+                                                borderColor: 'rgba(0, 255, 255, 0.3)'
                                             }
                                         },
                                             level === 'all' ? 'All Levels' : level,
                                             level !== 'all' && React.createElement('span', { 
                                                 className: 'ml-2 px-2 py-1 rounded text-xs',
                                                 style: {
-                                                    background: 'rgba(0, 0, 0, 0.1)',
-                                                    color: difficultyFilter === level ? 
-                                                        (theme === 'dark' ? '#000000' : '#ffffff') : 
-                                                        themedStyles.accentColor
+                                                    background: 'rgba(0, 0, 0, 0.2)',
+                                                    color: difficultyFilter === level ? '#000000' : '#00ffff'
                                                 }
                                             }, getDifficultyStats()[level])
                                         )
@@ -918,7 +696,7 @@
                                 React.createElement('h2', { 
                                     className: 'text-3xl font-bold',
                                     style: { 
-                                        background: `linear-gradient(to right, ${themedStyles.textColor}, ${themedStyles.accentColor})`,
+                                        background: 'linear-gradient(to right, #ffffff, #00ffff)',
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent',
                                         backgroundClip: 'text'
@@ -927,9 +705,9 @@
                                 React.createElement('div', { 
                                     className: 'text-sm px-3 py-1 rounded-full border',
                                     style: {
-                                        background: themedStyles.cardBg,
-                                        borderColor: themedStyles.borderColor,
-                                        color: themedStyles.accentColor
+                                        background: 'rgba(0, 255, 255, 0.1)',
+                                        borderColor: 'rgba(0, 255, 255, 0.3)',
+                                        color: '#00ffff'
                                     }
                                 }, `${filteredModules.length} courses found`)
                             ),
@@ -943,9 +721,9 @@
                                         key: key, 
                                         className: 'backdrop-blur-sm rounded-xl border p-6 transition-all duration-300 hover:shadow-lg hover:transform hover:scale-105',
                                         style: {
-                                            background: themedStyles.cardBg,
-                                            borderColor: themedStyles.borderColor,
-                                            boxShadow: `0 0 20px ${themedStyles.borderColor}`
+                                            background: 'rgba(26, 26, 26, 0.8)',
+                                            borderColor: 'rgba(0, 255, 255, 0.3)',
+                                            boxShadow: '0 0 20px rgba(0, 255, 255, 0.1)'
                                         }
                                     },
                                         // Course Header
@@ -955,18 +733,12 @@
                                                     React.createElement(module.icon, { className: 'h-6 w-6 text-white' })
                                                 ),
                                                 React.createElement('div', { className: 'flex-1' },
-                                                    React.createElement('h3', { 
-                                                        className: 'text-xl font-semibold mb-1',
-                                                        style: { color: themedStyles.textColor }
-                                                    }, module.title),
+                                                    React.createElement('h3', { className: 'text-xl font-semibold mb-1' }, module.title),
                                                     React.createElement('div', { className: 'flex items-center space-x-3 mb-2' },
                                                         React.createElement('span', { 
                                                             className: `text-xs px-2 py-1 rounded-full border ${getDifficultyColor(module.difficulty)}` 
                                                         }, module.difficulty),
-                                                        React.createElement('span', { 
-                                                            className: 'text-xs flex items-center space-x-1',
-                                                            style: { color: themedStyles.mutedText }
-                                                        },
+                                                        React.createElement('span', { className: 'text-xs text-gray-400 flex items-center space-x-1' },
                                                             React.createElement('svg', { 
                                                                 className: 'h-3 w-3',
                                                                 fill: 'none',
@@ -979,43 +751,34 @@
                                                             React.createElement('span', null, module.duration)
                                                         )
                                                     ),
-                                                    React.createElement('p', { 
-                                                        className: 'text-sm',
-                                                        style: { color: themedStyles.mutedText }
-                                                    }, module.description)
+                                                    React.createElement('p', { className: 'text-gray-400 text-sm' }, module.description)
                                                 )
                                             ),
                                             React.createElement('div', { className: 'text-right' },
                                                 React.createElement('div', { 
                                                     className: 'text-2xl font-bold',
-                                                    style: { color: themedStyles.accentColor }
+                                                    style: { color: '#00ffff' }
                                                 }, progress.score + '%'),
-                                                React.createElement('div', { 
-                                                    className: 'text-xs',
-                                                    style: { color: themedStyles.mutedText }
-                                                }, 'Best Score')
+                                                React.createElement('div', { className: 'text-xs text-gray-400' }, 'Best Score')
                                             )
                                         ),
                                         
                                         // Progress Bar
                                         React.createElement('div', { className: 'mb-4' },
-                                            React.createElement('div', { 
-                                                className: 'flex justify-between text-sm mb-2',
-                                                style: { color: themedStyles.mutedText }
-                                            },
+                                            React.createElement('div', { className: 'flex justify-between text-sm text-gray-400 mb-2' },
                                                 React.createElement('span', null, `Progress: ${progress.completed}/${progress.total} lessons`),
                                                 React.createElement('span', null, Math.round(progressPercent) + '%')
                                             ),
                                             React.createElement('div', { 
                                                 className: 'w-full rounded-full h-2',
-                                                style: { backgroundColor: themedStyles.secondaryBg }
+                                                style: { backgroundColor: '#1a1a1a' }
                                             },
                                                 React.createElement('div', { 
                                                     className: 'h-2 rounded-full transition-all duration-500',
                                                     style: { 
                                                         width: progressPercent + '%',
-                                                        background: `linear-gradient(to right, ${themedStyles.accentColor}, #0080ff)`,
-                                                        boxShadow: `0 0 10px ${themedStyles.accentColor}`
+                                                        background: 'linear-gradient(to right, #00ffff, #0080ff)',
+                                                        boxShadow: '0 0 10px #00ffff'
                                                     }
                                                 })
                                             )
@@ -1025,8 +788,7 @@
                                         React.createElement('div', { className: 'grid grid-cols-2 gap-4 mb-4 text-sm' },
                                             React.createElement('div', { className: 'flex items-center space-x-2' },
                                                 React.createElement('svg', { 
-                                                    className: 'h-4 w-4',
-                                                    style: { color: themedStyles.mutedText },
+                                                    className: 'h-4 w-4 text-gray-400',
                                                     fill: 'none',
                                                     stroke: 'currentColor',
                                                     viewBox: '0 0 24 24'
@@ -1038,18 +800,11 @@
                                                         d: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
                                                     })
                                                 ),
-                                                React.createElement('span', { 
-                                                    style: { color: themedStyles.textColor }
-                                                }, `${progress.total} Lessons`)
+                                                React.createElement('span', { className: 'text-gray-300' }, `${progress.total} Lessons`)
                                             ),
                                             React.createElement('div', { className: 'flex items-center space-x-2' },
-                                                React.createElement(Trophy, { 
-                                                    className: 'h-4 w-4',
-                                                    style: { color: themedStyles.mutedText }
-                                                }),
-                                                React.createElement('span', { 
-                                                    style: { color: themedStyles.textColor }
-                                                }, 'Certificate')
+                                                React.createElement(Trophy, { className: 'h-4 w-4 text-gray-400' }),
+                                                React.createElement('span', { className: 'text-gray-300' }, 'Certificate')
                                             )
                                         ),
 
@@ -1059,8 +814,8 @@
                                                 onClick: () => setActiveModule(key),
                                                 className: 'flex-1 flex items-center justify-center space-x-2 px-4 py-3 rounded-lg transition-all duration-200 font-semibold text-sm',
                                                 style: {
-                                                    background: `linear-gradient(to right, ${themedStyles.accentColor}, #0080ff)`,
-                                                    color: theme === 'dark' ? '#000000' : '#ffffff'
+                                                    background: 'linear-gradient(to right, #00ffff, #0080ff)',
+                                                    color: '#000000'
                                                 }
                                             },
                                                 React.createElement(Play, { className: 'h-4 w-4' }),
@@ -1071,13 +826,13 @@
                                                 disabled: !quizzes[key],
                                                 className: 'px-4 py-3 rounded-lg transition-all duration-200 border text-sm font-semibold',
                                                 style: quizzes[key] ? {
-                                                    background: themedStyles.cardBg,
-                                                    borderColor: themedStyles.accentColor,
-                                                    color: themedStyles.accentColor
+                                                    background: 'rgba(26, 26, 26, 0.8)',
+                                                    borderColor: '#00ffff',
+                                                    color: '#00ffff'
                                                 } : {
-                                                    background: themedStyles.cardBg,
-                                                    borderColor: themedStyles.mutedText,
-                                                    color: themedStyles.mutedText,
+                                                    background: 'rgba(26, 26, 26, 0.5)',
+                                                    borderColor: '#666666',
+                                                    color: '#666666',
                                                     cursor: 'not-allowed'
                                                 }
                                             },
@@ -1095,17 +850,14 @@
                             React.createElement('div', { 
                                 className: 'backdrop-blur-sm rounded-xl border p-6',
                                 style: {
-                                    background: themedStyles.cardBg,
-                                    borderColor: themedStyles.borderColor
+                                    background: 'rgba(26, 26, 26, 0.8)',
+                                    borderColor: 'rgba(0, 255, 255, 0.3)'
                                 }
                             },
-                                React.createElement('h3', { 
-                                    className: 'text-xl font-semibold mb-4 flex items-center space-x-2',
-                                    style: { color: themedStyles.textColor }
-                                },
+                                React.createElement('h3', { className: 'text-xl font-semibold mb-4 flex items-center space-x-2' },
                                     React.createElement('svg', { 
                                         className: 'h-5 w-5',
-                                        style: { color: themedStyles.accentColor },
+                                        style: { color: '#00ffff' },
                                         fill: 'none',
                                         stroke: 'currentColor',
                                         viewBox: '0 0 24 24'
@@ -1133,42 +885,33 @@
                                             key: level,
                                             className: 'rounded-lg p-4 border',
                                             style: {
-                                                background: themedStyles.cardBg,
-                                                borderColor: themedStyles.borderColor
+                                                background: 'rgba(0, 0, 0, 0.3)',
+                                                borderColor: 'rgba(0, 255, 255, 0.2)'
                                             }
                                         },
                                             React.createElement('div', { className: 'flex justify-between items-center mb-2' },
                                                 React.createElement('span', { 
-                                                    className: `font-medium`,
-                                                    style: { 
-                                                        color: level === 'Beginner' ? (theme === 'dark' ? '#10b981' : '#059669') :
-                                                               level === 'Intermediate' ? (theme === 'dark' ? '#f97316' : '#d97706') :
-                                                               (theme === 'dark' ? '#ef4444' : '#dc2626')
-                                                    }
+                                                    className: `font-medium ${getDifficultyColor(level).split(' ')[0]}` 
                                                 }, level),
                                                 React.createElement('span', { 
                                                     className: 'text-sm',
-                                                    style: { color: themedStyles.accentColor }
+                                                    style: { color: '#00ffff' }
                                                 }, levelProgress + '%')
                                             ),
                                             React.createElement('div', { 
                                                 className: 'w-full rounded-full h-1.5 mb-2',
-                                                style: { backgroundColor: themedStyles.secondaryBg }
+                                                style: { backgroundColor: '#1a1a1a' }
                                             },
                                                 React.createElement('div', { 
                                                     className: 'h-1.5 rounded-full transition-all duration-500',
                                                     style: { 
                                                         width: levelProgress + '%',
-                                                        background: level === 'Beginner' ? (theme === 'dark' ? '#10b981' : '#059669') : 
-                                                                   level === 'Intermediate' ? (theme === 'dark' ? '#f97316' : '#d97706') : 
-                                                                   (theme === 'dark' ? '#ef4444' : '#dc2626')
+                                                        background: level === 'Beginner' ? '#10b981' : 
+                                                                   level === 'Intermediate' ? '#f97316' : '#ef4444'
                                                     }
                                                 })
                                             ),
-                                            React.createElement('div', { 
-                                                className: 'text-xs',
-                                                style: { color: themedStyles.mutedText }
-                                            },
+                                            React.createElement('div', { className: 'text-xs text-gray-400' },
                                                 `${levelModules.length} courses • ${completedInLevel}/${totalInLevel} lessons`
                                             )
                                         );
@@ -1180,50 +923,37 @@
                             React.createElement('div', { 
                                 className: 'backdrop-blur-sm rounded-xl border p-6',
                                 style: {
-                                    background: themedStyles.cardBg,
-                                    borderColor: themedStyles.borderColor
+                                    background: 'rgba(26, 26, 26, 0.8)',
+                                    borderColor: 'rgba(0, 255, 255, 0.3)'
                                 }
                             },
-                                React.createElement('h3', { 
-                                    className: 'text-xl font-semibold mb-4 flex items-center space-x-2',
-                                    style: { color: themedStyles.textColor }
-                                },
+                                React.createElement('h3', { className: 'text-xl font-semibold mb-4 flex items-center space-x-2' },
                                     React.createElement(Trophy, { 
                                         className: 'h-5 w-5',
-                                        style: { color: themedStyles.accentColor }
+                                        style: { color: '#00ffff' }
                                     }),
                                     React.createElement('span', null, 'Leaderboard')
                                 ),
                                 React.createElement('div', { className: 'space-y-3' },
                                     leaderboard.map((user, index) =>
-                                        React.createElement('div', { 
-                                            key: index, 
-                                            className: 'flex items-center justify-between',
-                                            style: { color: themedStyles.textColor }
-                                        },
+                                        React.createElement('div', { key: index, className: 'flex items-center justify-between' },
                                             React.createElement('div', { className: 'flex items-center space-x-3' },
                                                 React.createElement('div', { 
                                                     className: `w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold`,
                                                     style: {
-                                                        backgroundColor: index === 0 ? themedStyles.accentColor : themedStyles.secondaryBg,
-                                                        color: index === 0 ? (theme === 'dark' ? '#000000' : '#ffffff') : themedStyles.accentColor,
-                                                        border: index === 0 ? 'none' : `1px solid ${themedStyles.accentColor}`
+                                                        backgroundColor: index === 0 ? '#00ffff' : '#1a1a1a',
+                                                        color: index === 0 ? '#000000' : '#00ffff',
+                                                        border: index === 0 ? 'none' : '1px solid #00ffff'
                                                     }
                                                 }, index + 1),
                                                 React.createElement('div', null,
-                                                    React.createElement('div', { 
-                                                        className: 'font-medium',
-                                                        style: { color: themedStyles.textColor }
-                                                    }, user.name),
-                                                    React.createElement('div', { 
-                                                        className: 'text-xs',
-                                                        style: { color: themedStyles.mutedText }
-                                                    }, 'Expert Level')
+                                                    React.createElement('div', { className: 'font-medium' }, user.name),
+                                                    React.createElement('div', { className: 'text-xs text-gray-400' }, 'Expert Level')
                                                 )
                                             ),
                                             React.createElement('div', { 
                                                 className: 'font-bold',
-                                                style: { color: themedStyles.accentColor }
+                                                style: { color: '#00ffff' }
                                             }, user.score)
                                         )
                                     )
@@ -1234,56 +964,45 @@
                             React.createElement('div', { 
                                 className: 'backdrop-blur-sm rounded-xl border p-6',
                                 style: {
-                                    background: themedStyles.cardBg,
-                                    borderColor: themedStyles.borderColor
+                                    background: 'rgba(26, 26, 26, 0.8)',
+                                    borderColor: 'rgba(0, 255, 255, 0.3)'
                                 }
                             },
-                                React.createElement('h3', { 
-                                    className: 'text-xl font-semibold mb-4',
-                                    style: { color: themedStyles.textColor }
-                                }, 'Your Progress'),
+                                React.createElement('h3', { className: 'text-xl font-semibold mb-4' }, 'Your Progress'),
                                 React.createElement('div', { className: 'space-y-4' },
                                     React.createElement('div', { className: 'flex items-center justify-between' },
-                                        React.createElement('span', { 
-                                            style: { color: themedStyles.textColor }
-                                        }, 'Courses Started'),
+                                        React.createElement('span', { className: 'text-gray-300' }, 'Courses Started'),
                                         React.createElement('span', { 
                                             className: 'font-bold',
-                                            style: { color: themedStyles.accentColor }
+                                            style: { color: '#00ffff' }
                                         },
                                             Object.values(userProgress).filter(p => p.completed > 0).length + '/12'
                                         )
                                     ),
                                     React.createElement('div', { className: 'flex items-center justify-between' },
-                                        React.createElement('span', { 
-                                            style: { color: themedStyles.textColor }
-                                        }, 'Lessons Completed'),
+                                        React.createElement('span', { className: 'text-gray-300' }, 'Lessons Completed'),
                                         React.createElement('span', { 
                                             className: 'font-bold',
-                                            style: { color: themedStyles.accentColor }
+                                            style: { color: '#00ffff' }
                                         },
                                             Object.values(userProgress).reduce((sum, module) => sum + module.completed, 0) + '/' +
                                             Object.values(userProgress).reduce((sum, module) => sum + module.total, 0)
                                         )
                                     ),
                                     React.createElement('div', { className: 'flex items-center justify-between' },
-                                        React.createElement('span', { 
-                                            style: { color: themedStyles.textColor }
-                                        }, 'Average Score'),
+                                        React.createElement('span', { className: 'text-gray-300' }, 'Average Score'),
                                         React.createElement('span', { 
                                             className: 'font-bold',
-                                            style: { color: themedStyles.accentColor }
+                                            style: { color: '#00ffff' }
                                         },
                                             Math.round(getTotalScore() / Object.keys(modules).length) + '%'
                                         )
                                     ),
                                     React.createElement('div', { className: 'flex items-center justify-between' },
-                                        React.createElement('span', { 
-                                            style: { color: themedStyles.textColor }
-                                        }, 'Global Rank'),
+                                        React.createElement('span', { className: 'text-gray-300' }, 'Global Rank'),
                                         React.createElement('span', { 
                                             className: 'font-bold',
-                                            style: { color: themedStyles.accentColor }
+                                            style: { color: '#00ffff' }
                                         }, '#6')
                                     )
                                 )
@@ -1293,43 +1012,35 @@
                             React.createElement('div', { 
                                 className: 'backdrop-blur-sm rounded-xl border p-6',
                                 style: {
-                                    background: themedStyles.cardBg,
-                                    borderColor: themedStyles.borderColor
+                                    background: 'rgba(26, 26, 26, 0.8)',
+                                    borderColor: 'rgba(0, 255, 255, 0.3)'
                                 }
                             },
-                                React.createElement('h3', { 
-                                    className: 'text-xl font-semibold mb-4 flex items-center space-x-2',
-                                    style: { color: themedStyles.textColor }
-                                },
+                                React.createElement('h3', { className: 'text-xl font-semibold mb-4 flex items-center space-x-2' },
                                     React.createElement(Zap, { 
                                         className: 'h-5 w-5',
-                                        style: { color: themedStyles.accentColor }
+                                        style: { color: '#00ffff' }
                                     }),
                                     React.createElement('span', null, 'Security Tip')
                                 ),
                                 React.createElement('div', { 
                                     className: 'rounded-lg p-4 border',
                                     style: {
-                                        background: theme === 'dark' 
-                                            ? 'rgba(0, 255, 255, 0.1)' 
-                                            : 'rgba(8, 145, 178, 0.1)',
-                                        borderColor: themedStyles.borderColor
+                                        background: 'rgba(0, 255, 255, 0.1)',
+                                        borderColor: 'rgba(0, 255, 255, 0.3)'
                                     }
                                 },
                                     React.createElement('div', { className: 'flex items-start space-x-3' },
                                         React.createElement(AlertTriangle, { 
                                             className: 'h-5 w-5 mt-0.5',
-                                            style: { color: themedStyles.accentColor }
+                                            style: { color: '#00ffff' }
                                         }),
                                         React.createElement('div', null,
                                             React.createElement('div', { 
                                                 className: 'font-medium mb-1',
-                                                style: { color: themedStyles.accentColor }
+                                                style: { color: '#00ffff' }
                                             }, 'Multi-Factor Authentication'),
-                                            React.createElement('p', { 
-                                                className: 'text-sm',
-                                                style: { color: themedStyles.textColor }
-                                            },
+                                            React.createElement('p', { className: 'text-sm text-gray-300' },
                                                 'Enable 2FA on all your accounts. Even if your password is compromised, MFA provides an additional security layer.'
                                             )
                                         )
@@ -1345,20 +1056,16 @@
                     React.createElement('div', { 
                         className: 'rounded-xl border max-w-2xl w-full',
                         style: {
-                            background: themedStyles.cardBg,
-                            borderColor: themedStyles.borderColor
+                            background: '#1a1a1a',
+                            borderColor: 'rgba(0, 255, 255, 0.5)'
                         }
                     },
                         React.createElement('div', { className: 'p-6' },
                             React.createElement('div', { className: 'flex items-center justify-between mb-6' },
-                                React.createElement('h2', { 
-                                    className: 'text-2xl font-bold',
-                                    style: { color: themedStyles.textColor }
-                                }, currentQuiz.title),
+                                React.createElement('h2', { className: 'text-2xl font-bold' }, currentQuiz.title),
                                 React.createElement('button', { 
                                     onClick: () => setCurrentQuiz(null),
-                                    className: 'text-2xl hover:opacity-70 transition-opacity',
-                                    style: { color: themedStyles.mutedText }
+                                    className: 'text-gray-400 hover:text-white text-2xl'
                                 }, '✕')
                             ),
                             
@@ -1368,43 +1075,27 @@
                                         key: qIndex, 
                                         className: 'rounded-lg p-4 border',
                                         style: {
-                                            background: themedStyles.secondaryBg,
-                                            borderColor: themedStyles.borderColor
+                                            background: 'rgba(0, 0, 0, 0.3)',
+                                            borderColor: 'rgba(0, 255, 255, 0.3)'
                                         }
                                     },
-                                        React.createElement('h3', { 
-                                            className: 'font-semibold mb-4',
-                                            style: { color: themedStyles.textColor }
-                                        },
+                                        React.createElement('h3', { className: 'font-semibold mb-4' },
                                             `Question ${qIndex + 1}: ${question.question}`
                                         ),
                                         React.createElement('div', { className: 'space-y-2' },
                                             question.options.map((option, oIndex) =>
                                                 React.createElement('label', { 
                                                     key: oIndex, 
-                                                    className: 'flex items-center space-x-3 cursor-pointer p-2 rounded transition-colors',
-                                                    style: {
-                                                        ':hover': { backgroundColor: 'rgba(0, 0, 0, 0.05)' }
-                                                    },
-                                                    onMouseEnter: (e) => {
-                                                        e.target.style.backgroundColor = theme === 'dark' 
-                                                            ? 'rgba(255, 255, 255, 0.05)' 
-                                                            : 'rgba(0, 0, 0, 0.05)';
-                                                    },
-                                                    onMouseLeave: (e) => {
-                                                        e.target.style.backgroundColor = 'transparent';
-                                                    }
+                                                    className: 'flex items-center space-x-3 cursor-pointer hover:bg-black/20 p-2 rounded' 
                                                 },
                                                     React.createElement('input', {
                                                         type: 'radio',
                                                         name: `question-${qIndex}`,
                                                         value: oIndex,
                                                         onChange: () => handleQuizAnswer(qIndex, oIndex),
-                                                        style: { accentColor: themedStyles.accentColor }
+                                                        style: { accentColor: '#00ffff' }
                                                     }),
-                                                    React.createElement('span', { 
-                                                        style: { color: themedStyles.textColor }
-                                                    }, option)
+                                                    React.createElement('span', null, option)
                                                 )
                                             )
                                         )
@@ -1416,38 +1107,32 @@
                                     disabled: Object.keys(quizAnswers).length < currentQuiz.questions.length,
                                     className: 'w-full px-6 py-3 rounded-lg font-semibold transition-all duration-200',
                                     style: Object.keys(quizAnswers).length < currentQuiz.questions.length ? {
-                                        background: themedStyles.mutedText,
-                                        color: theme === 'dark' ? '#000000' : '#ffffff',
-                                        cursor: 'not-allowed',
-                                        opacity: 0.6
+                                        background: '#666666',
+                                        color: '#cccccc',
+                                        cursor: 'not-allowed'
                                     } : {
-                                        background: `linear-gradient(to right, ${themedStyles.accentColor}, #0080ff)`,
-                                        color: theme === 'dark' ? '#000000' : '#ffffff'
+                                        background: 'linear-gradient(to right, #00ffff, #0080ff)',
+                                        color: '#000000'
                                     }
                                 }, 'Submit Quiz')
                             ) : React.createElement('div', { className: 'text-center space-y-6' },
                                 React.createElement('div', { className: 'text-6xl' }, '🎉'),
-                                React.createElement('h3', { 
-                                    className: 'text-2xl font-bold',
-                                    style: { color: themedStyles.textColor }
-                                }, 'Quiz Completed!'),
+                                React.createElement('h3', { className: 'text-2xl font-bold' }, 'Quiz Completed!'),
                                 React.createElement('div', { 
                                     className: 'text-4xl font-bold',
-                                    style: { color: themedStyles.accentColor }
+                                    style: { color: '#00ffff' }
                                 },
                                     Math.round((Object.keys(quizAnswers).filter(q => quizAnswers[q] === currentQuiz.questions[q].correct).length / currentQuiz.questions.length) * 100) + '%'
                                 ),
-                                React.createElement('p', { 
-                                    style: { color: themedStyles.textColor }
-                                },
+                                React.createElement('p', { className: 'text-gray-300' },
                                     `You got ${Object.keys(quizAnswers).filter(q => quizAnswers[q] === currentQuiz.questions[q].correct).length} out of ${currentQuiz.questions.length} questions correct!`
                                 ),
                                 React.createElement('button', { 
                                     onClick: () => setCurrentQuiz(null),
                                     className: 'px-6 py-3 rounded-lg font-semibold transition-all duration-200',
                                     style: {
-                                        background: `linear-gradient(to right, ${themedStyles.accentColor}, #0080ff)`,
-                                        color: theme === 'dark' ? '#000000' : '#ffffff'
+                                        background: 'linear-gradient(to right, #00ffff, #0080ff)',
+                                        color: '#000000'
                                     }
                                 }, 'Continue Training')
                             )
@@ -1460,8 +1145,8 @@
                     React.createElement('div', { 
                         className: 'rounded-xl border max-w-3xl w-full max-h-[80vh] overflow-y-auto',
                         style: {
-                            background: themedStyles.cardBg,
-                            borderColor: themedStyles.borderColor
+                            background: '#1a1a1a',
+                            borderColor: 'rgba(0, 255, 255, 0.5)'
                         }
                     },
                         React.createElement('div', { className: 'p-6' },
@@ -1471,50 +1156,33 @@
                                         React.createElement(modules[activeModule].icon, { className: 'h-6 w-6 text-white' })
                                     ),
                                     React.createElement('div', null,
-                                        React.createElement('h2', { 
-                                            className: 'text-2xl font-bold',
-                                            style: { color: themedStyles.textColor }
-                                        }, modules[activeModule].title),
+                                        React.createElement('h2', { className: 'text-2xl font-bold' }, modules[activeModule].title),
                                         React.createElement('div', { className: 'flex items-center space-x-3 mt-2' },
                                             React.createElement('span', { 
                                                 className: `text-sm px-2 py-1 rounded-full border ${getDifficultyColor(modules[activeModule].difficulty)}` 
                                             }, modules[activeModule].difficulty),
-                                            React.createElement('span', { 
-                                                className: 'text-sm',
-                                                style: { color: themedStyles.mutedText }
-                                            }, modules[activeModule].duration)
+                                            React.createElement('span', { className: 'text-sm text-gray-400' }, modules[activeModule].duration)
                                         )
                                     )
                                 ),
                                 React.createElement('button', { 
                                     onClick: () => setActiveModule(null),
-                                    className: 'text-2xl hover:opacity-70 transition-opacity',
-                                    style: { color: themedStyles.mutedText }
+                                    className: 'text-gray-400 hover:text-white text-2xl'
                                 }, '✕')
                             ),
                             
                             React.createElement('div', { className: 'mb-6' },
-                                React.createElement('p', { 
-                                    style: { color: themedStyles.textColor }
-                                }, modules[activeModule].description)
+                                React.createElement('p', { className: 'text-gray-300' }, modules[activeModule].description)
                             ),
 
                             React.createElement('div', { className: 'space-y-4' },
                                 modules[activeModule].lessons.map((lesson, index) =>
                                     React.createElement('div', { 
                                         key: index, 
-                                        className: 'rounded-lg p-4 border transition-all duration-200',
+                                        className: 'rounded-lg p-4 border transition-all duration-200 hover:bg-black/20',
                                         style: {
-                                            background: themedStyles.secondaryBg,
-                                            borderColor: themedStyles.borderColor
-                                        },
-                                        onMouseEnter: (e) => {
-                                            e.currentTarget.style.backgroundColor = theme === 'dark' 
-                                                ? 'rgba(255, 255, 255, 0.05)' 
-                                                : 'rgba(0, 0, 0, 0.05)';
-                                        },
-                                        onMouseLeave: (e) => {
-                                            e.currentTarget.style.backgroundColor = themedStyles.secondaryBg;
+                                            background: 'rgba(0, 0, 0, 0.3)',
+                                            borderColor: 'rgba(0, 255, 255, 0.3)'
                                         }
                                     },
                                         React.createElement('div', { className: 'flex items-center justify-between' },
@@ -1522,15 +1190,15 @@
                                                 React.createElement('div', { 
                                                     className: `w-10 h-10 rounded-full flex items-center justify-center`,
                                                     style: index < userProgress[activeModule].completed ? {
-                                                        background: themedStyles.accentColor,
-                                                        color: theme === 'dark' ? '#000000' : '#ffffff'
+                                                        background: '#00ffff',
+                                                        color: '#000000'
                                                     } : index === userProgress[activeModule].completed ? {
-                                                        background: themedStyles.secondaryBg,
-                                                        border: `2px solid ${themedStyles.accentColor}`,
-                                                        color: themedStyles.accentColor
+                                                        background: '#1a1a1a',
+                                                        border: '2px solid #00ffff',
+                                                        color: '#00ffff'
                                                     } : {
-                                                        background: themedStyles.mutedText,
-                                                        color: theme === 'dark' ? '#000000' : '#ffffff'
+                                                        background: '#666666',
+                                                        color: '#ffffff'
                                                     }
                                                 },
                                                     index < userProgress[activeModule].completed ? 
@@ -1538,14 +1206,8 @@
                                                         React.createElement('span', { className: 'text-sm font-bold' }, index + 1)
                                                 ),
                                                 React.createElement('div', null,
-                                                    React.createElement('span', { 
-                                                        className: 'font-medium text-lg',
-                                                        style: { color: themedStyles.textColor }
-                                                    }, lesson),
-                                                    React.createElement('div', { 
-                                                        className: 'text-sm mt-1',
-                                                        style: { color: themedStyles.mutedText }
-                                                    },
+                                                    React.createElement('span', { className: 'font-medium text-lg' }, lesson),
+                                                    React.createElement('div', { className: 'text-sm text-gray-400 mt-1' },
                                                         `Lesson ${index + 1} • `,
                                                         index < userProgress[activeModule].completed ? 'Completed' :
                                                         index === userProgress[activeModule].completed ? 'Ready to start' : 'Locked'
@@ -1556,12 +1218,10 @@
                                                 index < userProgress[activeModule].completed && React.createElement('div', { 
                                                     className: 'px-2 py-1 rounded text-xs',
                                                     style: {
-                                                        background: theme === 'dark' 
-                                                            ? 'rgba(0, 255, 255, 0.2)' 
-                                                            : 'rgba(8, 145, 178, 0.2)',
-                                                        color: themedStyles.accentColor
+                                                        background: 'rgba(0, 255, 255, 0.2)',
+                                                        color: '#00ffff'
                                                     }
-                                                }, 'Complete'),
+                                                }, '✓ Complete'),
                                                 React.createElement('button', { 
                                                     onClick: () => {
                                                         if (index <= userProgress[activeModule].completed) {
@@ -1576,19 +1236,16 @@
                                                     },
                                                     className: `px-4 py-2 rounded text-sm font-semibold transition-all duration-200`,
                                                     style: index < userProgress[activeModule].completed ? {
-                                                        background: theme === 'dark' 
-                                                            ? 'rgba(0, 255, 255, 0.2)' 
-                                                            : 'rgba(8, 145, 178, 0.2)',
-                                                        color: themedStyles.accentColor,
-                                                        border: `1px solid ${themedStyles.accentColor}`
+                                                        background: 'rgba(0, 255, 255, 0.2)',
+                                                        color: '#00ffff',
+                                                        border: '1px solid #00ffff'
                                                     } : index === userProgress[activeModule].completed ? {
-                                                        background: `linear-gradient(to right, ${themedStyles.accentColor}, #0080ff)`,
-                                                        color: theme === 'dark' ? '#000000' : '#ffffff'
+                                                        background: 'linear-gradient(to right, #00ffff, #0080ff)',
+                                                        color: '#000000'
                                                     } : {
-                                                        background: themedStyles.mutedText,
-                                                        color: theme === 'dark' ? '#000000' : '#ffffff',
-                                                        cursor: 'not-allowed',
-                                                        opacity: 0.6
+                                                        background: '#666666',
+                                                        color: '#cccccc',
+                                                        cursor: 'not-allowed'
                                                     },
                                                     disabled: index > userProgress[activeModule].completed
                                                 },
@@ -1601,28 +1258,20 @@
                                 )
                             ),
 
-                            React.createElement('div', { 
-                                className: 'mt-8 pt-6 border-t',
-                                style: { borderColor: themedStyles.borderColor }
-                            },
+                            React.createElement('div', { className: 'mt-8 pt-6 border-t border-gray-700' },
                                 React.createElement('div', { className: 'grid md:grid-cols-2 gap-6' },
                                     React.createElement('div', { 
                                         className: 'rounded-lg p-4 border',
                                         style: {
-                                            background: theme === 'dark' 
-                                                ? 'rgba(0, 255, 255, 0.1)' 
-                                                : 'rgba(8, 145, 178, 0.1)',
-                                            borderColor: themedStyles.borderColor
+                                            background: 'rgba(0, 255, 255, 0.1)',
+                                            borderColor: 'rgba(0, 255, 255, 0.3)'
                                         }
                                     },
                                         React.createElement('h4', { 
                                             className: 'font-semibold mb-2',
-                                            style: { color: themedStyles.accentColor }
+                                            style: { color: '#00ffff' }
                                         }, 'Learning Objectives'),
-                                        React.createElement('ul', { 
-                                            className: 'text-sm space-y-1',
-                                            style: { color: themedStyles.textColor }
-                                        },
+                                        React.createElement('ul', { className: 'text-sm text-gray-300 space-y-1' },
                                             modules[activeModule].lessons.slice(0, 3).map((lesson, idx) =>
                                                 React.createElement('li', { key: idx }, `• ${lesson}`)
                                             )
@@ -1631,18 +1280,12 @@
                                     React.createElement('div', { 
                                         className: 'rounded-lg p-4 border',
                                         style: {
-                                            background: themedStyles.secondaryBg,
-                                            borderColor: themedStyles.borderColor
+                                            background: 'rgba(0, 0, 0, 0.3)',
+                                            borderColor: 'rgba(0, 255, 255, 0.3)'
                                         }
                                     },
-                                        React.createElement('h4', { 
-                                            className: 'font-semibold mb-2',
-                                            style: { color: themedStyles.textColor }
-                                        }, 'Course Stats'),
-                                        React.createElement('div', { 
-                                            className: 'text-sm space-y-2',
-                                            style: { color: themedStyles.textColor }
-                                        },
+                                        React.createElement('h4', { className: 'font-semibold mb-2' }, 'Course Stats'),
+                                        React.createElement('div', { className: 'text-sm text-gray-300 space-y-2' },
                                             React.createElement('div', { className: 'flex justify-between' },
                                                 React.createElement('span', null, 'Duration:'),
                                                 React.createElement('span', null, modules[activeModule].duration)
@@ -1718,6 +1361,7 @@
       <div id="error" class="error"></div>
     </form>
     <!-- Chatbot Widget -->
+     <!-- Chatbot Widget -->
 <div id="chatbot-container">
   <div id="chatbot-header">
     <span>💬 CyberSP Chat</span>
@@ -1733,5 +1377,8 @@
 <!-- Chatbot Toggle Button -->
 <button id="chatbot-toggle">💬</button>
 
+<!-- Chatbot Toggle Button -->
+<button id="chatbot-toggle">💬</button>
+<script src="incident.js"></script>
 </body>
 </html>

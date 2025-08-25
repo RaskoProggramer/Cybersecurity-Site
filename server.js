@@ -233,7 +233,7 @@ app.post('/api/chat', async (req, res) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
         "HTTP-Referer": "http://localhost:3000",  // ✅ replace with your site URL
         "X-Title": "CyberSP Bot"                 // shows on OpenRouter dashboard
       },
